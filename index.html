@@ -67,6 +67,7 @@
     <!-- Wrapper Principal --><div class="container mx-auto max-w-4xl p-4 md:p-8">
 
         <!-- Header --><header class="text-center my-8 md:my-12">
+            <img src="/images/logo.png" alt="Logo Delícias de Chocolate" class="mx-auto h-24 w-auto mb-4">
             <h1 class="font-brand text-6xl md:text-8xl text-secondary-brown drop-shadow-md">Delícias de Chocolate</h1>
             <p class="text-stone-600 mt-2 text-xl italic">A doçura artesanal que encanta.</p>
         </header>
@@ -74,9 +75,9 @@
         <main>
             <!-- Seção Principal (Hero) --><section class="bg-white rounded-3xl shadow-xl p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 hero-gradient">
                 <!-- Imagem do Produto --><div class="md:w-1/2 w-full relative">
-                    <img src="https://placehold.co/600x600/92400e/FCC1C7?text=Pão+de+Mel+Delicioso" alt="[Imagem de um pão de mel artesanal com cobertura de chocolate brilhante e recheio cremoso aparente.]" class="rounded-2xl w-full h-auto object-cover shadow-lg transform hover:scale-105 transition-transform duration-500 ease-in-out">
+                    <img src="/images/pao-de-mel.png" alt="[Imagem de um pão de mel artesanal com cobertura de chocolate brilhante e recheio cremoso aparente.]" class="rounded-2xl w-full h-auto object-cover shadow-lg transform hover:scale-105 transition-transform duration-500 ease-in-out">
                     <!-- Detalhe decorativo na imagem --><div class="absolute -bottom-4 -right-4 bg-primary-pink p-3 rounded-full shadow-md">
-                        <svg xmlns="http://www.w.org/2000/svg" class="h-8 w-8 text-white animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                         </svg>
                     </div>
@@ -229,152 +230,5 @@
                     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
                 </a>
                  <a href="https://g.page/deliciasdechocolate.oficial" target="_blank" class="text-secondary-brown hover:text-primary-pink transition-colors transform hover:scale-110">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
-                </a>
-            </div>
-            <p class="text-stone-600">&copy; 2024 Delícias de Chocolate. Todos os direitos reservados.</p>
-            <p class="text-stone-500 text-sm mt-1">Sabor e tradição em cada pedaço.</p>
-        </footer>
-
-    </div>
-
-    <!-- Notificação de Compra --><div id="notification" class="fixed bottom-5 left-5 bg-white rounded-xl shadow-2xl p-4 w-80 z-50">
-        <div class="flex items-start gap-4">
-            <div class="bg-primary-pink p-2 rounded-full flex items-center justify-center">
-                 <svg class="w-6 h-6 text-secondary-brown" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25c0-4.07-3.35-7.5-7.5-7.5s-7.5 3.43-7.5 7.5c0 1.95.76 3.75 2.01 5.12.33.36.49.81.49 1.28v1.35c0 .62.5 1.12 1.12 1.12h7.76c.62 0 1.12-.5 1.12-1.12v-1.35c0-.47.16-.92.49-1.28 1.25-1.37 2.01-3.17 2.01-5.12zM9.75 12a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5z" />
-                </svg>
-            </div>
-            <div>
-                <div class="flex items-baseline gap-2">
-                    <p class="font-bold text-secondary-brown" id="notification-title"></p>
-                    <p class="text-xs text-stone-500" id="notification-location"></p>
-                </div>
-                <p class="text-sm text-stone-700 mt-1" id="notification-message"></p>
-                <p class="text-xs text-gray-400 mt-2" id="notification-time"></p>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Contador
-            const hoursEl = document.getElementById('hours');
-            const minutesEl = document.getElementById('minutes');
-            const secondsEl = document.getElementById('seconds');
-            const ctaButton = document.getElementById('cta-button');
-            const countdownText = document.getElementById('countdown-text');
-
-            const urlBefore = "https://api.whatsapp.com/send?phone=5543991621883&text=Olá!%20Gostaria%20de%20fazer%20meu%20pedido%20de%20Pão%20de%20Mel.";
-            const urlAfter = "https://api.whatsapp.com/send?phone=5543991621883&text=Olá!%20Ainda%20posso%20fazer%20meu%20pedido%20de%20Pão%20de%20Mel%3F";
-
-            function updateCountdown() {
-                const now = new Date();
-                let deadline = new Date(now);
-                deadline.setHours(18, 0, 0, 0);
-                
-                let isAfterDeadline = now > deadline;
-
-                if (isAfterDeadline) {
-                    deadline.setDate(deadline.getDate() + 1);
-                }
-
-                const diff = deadline.getTime() - now.getTime();
-                const hours = Math.floor(diff / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                if(hoursEl && minutesEl && secondsEl){
-                    if (isAfterDeadline) {
-                        ctaButton.href = urlAfter;
-                        countdownText.textContent = "Os pedidos de hoje se encerraram. Tente amanhã!";
-                        document.getElementById('countdown').style.display = 'none';
-                    } else {
-                        ctaButton.href = urlBefore;
-                        hoursEl.textContent = String(hours).padStart(2, '0');
-                        minutesEl.textContent = String(minutes).padStart(2, '0');
-                        secondsEl.textContent = String(seconds).padStart(2, '0');
-                    }
-                }
-            }
-
-            setInterval(updateCountdown, 1000);
-            updateCountdown();
-
-            // Notificações
-            const notification = document.getElementById('notification');
-            const titleEl = document.getElementById('notification-title');
-            const locationEl = document.getElementById('notification-location');
-            const messageEl = document.getElementById('notification-message');
-            const timeEl = document.getElementById('notification-time');
-
-            const firstNames = ['Maria', 'Ana', 'João', 'Beatriz', 'Lucas', 'Sofia', 'Pedro', 'Laura', 'Gabriel', 'Isabela', 'Daniela'];
-            const locations = ['Londrina, PR', 'Cambé, PR', 'Ibiporã, PR'];
-            const messages = [
-                'Acabou de garantir seu Pão de Mel para o café!',
-                'Não resistiu e pediu uma caixa para a família!',
-                'Vai se deliciar com o nosso pão de mel fresquinho!',
-                'Comprou para presentear uma pessoa especial!',
-                'Pedido realizado! Logo terá essa delícia em casa.',
-                'Garantiu o Pão de Mel mais gostoso da região!',
-                'Adoçando o dia com o melhor Pão de Mel!',
-                'Não perdeu a chance e comprou o seu!'
-            ];
-            const times = ['há poucos segundos', 'há 1 minuto', 'há 2 minutos'];
-
-            function showNotification() {
-                if (!notification) return;
-                const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-                const randomLocation = locations[Math.floor(Math.random() * locations.length)];
-                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-                const randomTime = times[Math.floor(Math.random() * times.length)];
-
-                titleEl.textContent = randomFirstName;
-                locationEl.textContent = randomLocation;
-                messageEl.textContent = randomMessage;
-                timeEl.textContent = randomTime;
-                notification.classList.add('show');
-                setTimeout(() => notification.classList.remove('show'), 7000);
-            }
-            setTimeout(showNotification, 5000);
-            setInterval(showNotification, Math.random() * (30000 - 15000) + 15000);
-
-            // Prova Social
-            const purchaseCountEl = document.getElementById('purchase-count');
-            if (purchaseCountEl) {
-                let count = Math.floor(Math.random() * (45 - 25 + 1)) + 25;
-                purchaseCountEl.textContent = count;
-                setInterval(() => {
-                    if (Math.random() > 0.7) {
-                        count++;
-                        purchaseCountEl.textContent = count;
-                    }
-                }, 9000);
-            }
-
-            // Acordeão FAQ
-            const faqItems = document.querySelectorAll('.faq-item');
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                question.addEventListener('click', () => {
-                    const answer = item.querySelector('.faq-answer');
-                    const icon = question.querySelector('svg');
-                    const isExpanded = answer.style.maxHeight && answer.style.maxHeight !== '0px';
-
-                    if (isExpanded) {
-                        answer.style.maxHeight = '0px';
-                        answer.style.paddingTop = '0';
-                        answer.style.paddingBottom = '0';
-                        icon.style.transform = 'rotate(0deg)';
-                    } else {
-                        answer.style.maxHeight = answer.scrollHeight + 'px';
-                        icon.style.transform = 'rotate(45deg)';
-                    }
-                });
-            });
-        });
-    </script>
-
-</body>
-</html>
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-
 
