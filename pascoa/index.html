@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Páscoa - Delícias de Chocolate</title>
+    
+    <!-- Fontes Amigáveis, Modernas e Limpas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* ================= VARIÁVEIS DE CORES (Alegres e Apetitivas) ================= */
+        :root {
+            --cor-fundo: #FFF8F9; /* Fundo levemente rosado/creme */
+            --cor-texto: #4A332A; /* Marrom chocolate (texto principal) */
+            --cor-texto-claro: #795548; /* Marrom mais claro */
+            --cor-destaque: #E91E63; /* Rosa vibrante e alegre */
+            --cor-destaque-claro: #FCE4EC; /* Rosa bem clarinho para fundos */
+            --cor-branco: #FFFFFF;
+            --cor-alerta: #FF9800; /* Laranja para chamar atenção */
+            --sombra-suave: 0 8px 24px rgba(74, 51, 42, 0.08);
+            --sombra-hover: 0 12px 32px rgba(233, 30, 99, 0.15);
+        }
+
+        /* ================= RESET GERAL ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--cor-texto);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* ================= HEADER / TOPO ================= */
+        .header {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            position: relative;
+        }
+
+        .saudacao-inteligente {
+            display: inline-block;
+            background-color: var(--cor-destaque-claro);
+            color: var(--cor-destaque);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(233, 30, 99, 0.2);
+        }
+
+        .header h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .header h1 span {
+            color: var(--cor-destaque);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--cor-texto-claro);
+        }
+
+        /* ================= CONTADOR REGRESSIVO ================= */
+        .contador-container {
+            background-color: var(--cor-branco);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: inline-flex;
+            gap: 1.5rem;
+            box-shadow: var(--sombra-suave);
+            margin-top: 2rem;
+            border: 2px solid var(--cor-destaque-claro);
+        }
+
+        .tempo-bloco {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+
+        .tempo-numero {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--cor-destaque);
+            line-height: 1;
+        }
+
+        .tempo-texto {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--cor-texto-claro);
+            margin-top: 4px;
+        }
+
+        /* ================= TÍTULOS DE SEÇÕES ================= */
+        .titulo-secao {
+            text-align: center;
+            margin: 4rem 0 2rem;
+        }
+
+        .titulo-secao h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+        }
+
+        .titulo-secao h2::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 4px;
+            background-color: var(--cor-destaque);
+            margin: 8px auto 0;
+            border-radius: 4px;
+        }
+
+        /* ================= DESTAQUE PRINCIPAL (NOVIDADE) ================= */
+        .card-novidade {
+            display: flex;
+            flex-wrap: wrap;
+            background-color: var(--cor-branco);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--sombra-suave);
+            margin-top: 3rem;
+            border: 2px solid var(--cor-destaque-claro);
+            position: relative;
+        }
+
+        .selo-novidade {
+            position: absolute;
+            top: 20px;
+            left: -10px;
+            background-color: var(--cor-alerta);
+            color: #FFF;
+            padding: 8px 20px;
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+            z-index: 10;
+        }
+
+        .img-novidade {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .img-novidade img {
+            width: 100%;
+            height: 100%;
+            min-height: 350px;
+            object-fit: cover;
+        }
+
+        .info-novidade {
+            flex: 1.5;
+            min-width: 300px;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-novidade h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+        }
+
+        .preco-destaque {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--cor-destaque);
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .desc-novidade {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sabores-box {
+            background-color: var(--cor-fundo);
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px dashed rgba(74, 51, 42, 0.2);
+        }
+
+        .sabores-box strong {
+            display: block;
+            color: var(--cor-destaque);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        /* ================= GRID DE PRODUTOS ================= */
+        .grid-produtos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card-produto {
+            background-color: var(--cor-branco);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: var(--sombra-suave);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .card-produto:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--sombra-hover);
+        }
+
+        .img-produto {
+            width: 100%;
+            height: 240px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.2rem;
+            background-color: var(--cor-destaque-claro);
+        }
+
+        .img-produto img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card-produto:hover .img-produto img {
+            transform: scale(1.05);
+        }
+
+        .categoria-tag {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--cor-destaque);
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .titulo-produto {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .preco-produto {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--cor-texto);
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .sabores-produto {
+            font-size: 0.95rem;
+            color: var(--cor-texto-claro);
+            flex-grow: 1;
+        }
+
+        .aviso-adicional {
+            margin-top: 1rem;
+            background-color: #FFF3E0;
+            color: #E65100;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Grid menor para lembrancinhas */
+        .grid-pequeno {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .grid-pequeno .img-produto { height: 180px; }
+        .grid-pequeno .titulo-produto { font-size: 1.3rem; }
+
+        /* ================= INFORMAÇÕES (REGRAS CLARAS) ================= */
+        .secao-infos {
+            background-color: var(--cor-branco);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            box-shadow: var(--sombra-suave);
+            margin-top: 4rem;
+            border: 2px solid var(--cor-destaque-claro);
+        }
+
+        .grid-infos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
+            align-items: center;
+        }
+
+        .icone-info {
+            width: 60px;
+            height: 60px;
+            background-color: var(--cor-destaque-claro);
+            color: var(--cor-destaque);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-info h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .item-info p {
+            font-size: 0.95rem;
+            color: var(--cor-texto-claro);
+        }
+
+        .texto-destacado {
+            color: var(--cor-destaque);
+            font-weight: 800;
+        }
+
+        /* ================= RODAPÉ E BOTÕES ================= */
+        .footer {
+            text-align: center;
+            padding: 4rem 1rem 3rem;
+        }
+
+        .chamada-venda {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        .botoes-contato {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .btn-acao {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            color: #FFF;
+            font-size: 1.1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            box-shadow: 0 8px 20px rgba(225, 48, 108, 0.3);
+        }
+
+        .btn-acao:hover {
+            transform: scale(1.05);
+        }
+
+        /* Botão Flutuante do WhatsApp */
+        .wpp-flutuante {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        .wpp-flutuante:hover {
+            transform: scale(1.1);
+        }
+
+        .creditos {
+            font-size: 0.9rem;
+            color: var(--cor-texto-claro);
+            margin-top: 2rem;
+        }
+
+        .creditos a {
+            color: var(--cor-destaque);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* ================= ANIMAÇÕES DE ENTRADA ================= */
+        .animar {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animar.visivel {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsividade Básica */
+        @media (max-width: 768px) {
+            .info-novidade { padding: 2rem 1.5rem; }
+            .info-novidade h3 { font-size: 2rem; }
+            .botoes-contato { flex-direction: column; }
+            .btn-acao { width: 100%; justify-content: center; }
+            .contador-container { flex-wrap: wrap; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPO DA PÁGINA -->
+    <header class="header container animar">
+        <div class="saudacao-inteligente" id="mensagem-saudacao">
+            <i class="fa-solid fa-face-smile-wink"></i> Bem-vindo(a)!
+        </div>
+        
+        <h1>Páscoa <span>Delícias de Chocolate</span></h1>
+        <p>Feitos com muito carinho e ingredientes selecionados para deixar a sua Páscoa (e de quem você ama) muito mais doce e feliz!</p>
+
+        <!-- Gatilho de Urgência Inteligente -->
+        <div class="contador-container">
+            <div class="tempo-bloco"><span class="tempo-numero" id="dia">00</span><span class="tempo-texto">Dias</span></div>
+            <div class="tempo-numero" style="color: var(--cor-texto-claro);">:</div>
+            <div class="tempo-bloco"><span class="tempo-numero" id="hora">00</span><span class="tempo-texto">Horas</span></div>
+            <div class="tempo-numero" style="color: var(--cor-texto-claro);">:</div>
+            <div class="tempo-bloco"><span class="tempo-numero" id="min">00</span><span class="tempo-texto">Min</span></div>
+            <div class="tempo-bloco" style="margin-left: 10px; padding-left: 20px; border-left: 1px solid #eee;">
+                <span class="tempo-texto" style="color: var(--cor-destaque); font-size: 0.9rem;">Para o fim das<br>encomendas</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- NOVIDADE (CHAMA ATENÇÃO) -->
+        <section class="card-novidade animar">
+            <div class="selo-novidade">NOVIDADE</div>
+            <div class="img-novidade">
+                <!-- Insira a imagem do ovo de degustação aqui -->
+                <img src="ovo-degustacao.jpg" alt="Kit de Fatias de Ovo de Páscoa">
+            </div>
+            <div class="info-novidade">
+                <h3>Ovo de Degustação</h3>
+                <div class="preco-destaque">R$ 65,00</div>
+                <p class="desc-novidade">Para quem quer provar um pouquinho de tudo! São <strong>6 fatias deliciosas</strong> de ovo, todas com uma base perfeita de Chocolate Meio Amargo.</p>
+                <div class="sabores-box">
+                    <strong><i class="fa-solid fa-heart"></i> Sabores do Kit:</strong>
+                    Alpino, Maracujá, Morango, Prestígio, Amendoim e Ninho.
+                </div>
+            </div>
+        </section>
+
+        <!-- OVOS DE COLHER -->
+        <div class="titulo-secao animar">
+            <h2>Os Mais Pedidos: Ovos de Colher</h2>
+        </div>
+
+        <section class="grid-produtos animar">
+            <article class="card-produto">
+                <div class="img-produto"><img src="ovos-classicos.jpg" alt="Ovos de Colher Clássicos"></div>
+                <div class="categoria-tag">Linha Clássicos</div>
+                <h3 class="titulo-produto">Ovos Tradicionais</h3>
+                <div class="preco-produto">R$ 50,00</div>
+                <div class="sabores-produto">
+                    <strong>Opções de Sabor:</strong><br>
+                    Duo, Prestígio e Amendoim Crocante.
+                </div>
+            </article>
+
+            <article class="card-produto">
+                <div class="img-produto"><img src="ovos-premium.jpg" alt="Ovos de Colher Premium"></div>
+                <div class="categoria-tag">Linha Premium</div>
+                <h3 class="titulo-produto">Ovos Especiais</h3>
+                <div class="preco-produto">R$ 70,00</div>
+                <div class="sabores-produto">
+                    <strong>Opções de Sabor:</strong><br>
+                    Biscoff, Maracujá Trufado, Alpino, Ninho com Nutella e Morango.
+                </div>
+                <div class="aviso-adicional">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    Quer com Casca de Brownie? Adicional de R$ 22,00.
+                </div>
+            </article>
+        </section>
+
+        <!-- INFANTIL -->
+        <div class="titulo-secao animar">
+            <h2>Para a Criançada</h2>
+        </div>
+
+        <section class="grid-produtos animar" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <article class="card-produto">
+                <div class="img-produto"><img src="coelho-colorir.jpg" alt="Coelho para Colorir"></div>
+                <h3 class="titulo-produto">Coelho Lapidado p/ Colorir</h3>
+                <div class="preco-produto" style="opacity: 0;">R$ 0</div> <!-- Mantém alinhamento -->
+                <div class="sabores-produto">
+                    <strong>Sabores:</strong> Ninho, Prestígio, Brigadeiro, Amendoim e Alpino.
+                </div>
+            </article>
+
+            <article class="card-produto">
+                <div class="img-produto"><img src="controle-recheado.jpg" alt="Controle de Videogame Recheado"></div>
+                <h3 class="titulo-produto">Controle Recheado</h3>
+                <div class="preco-produto">R$ 50,00</div>
+                <div class="sabores-produto">
+                    <strong>Sabores:</strong> Ninho, Prestígio, Brigadeiro, Amendoim e Alpino.
+                </div>
+            </article>
+        </section>
+
+        <!-- LEMBRANCINHAS -->
+        <div class="titulo-secao animar">
+            <h2>Lembrancinhas Deliciosas</h2>
+        </div>
+
+        <section class="grid-produtos grid-pequeno animar">
+            <article class="card-produto">
+                <div class="img-produto"><img src="mini-ovo.jpg" alt="Mini Ovo Recheado"></div>
+                <h3 class="titulo-produto">Mini Ovo</h3>
+                <div class="preco-produto" style="font-size: 1.6rem;">R$ 10,00</div>
+                <div class="sabores-produto" style="font-size: 0.85rem;"><strong>Sabores:</strong> Ninho, Prestígio, Brigadeiro, Amendoim e Alpino.</div>
+            </article>
+
+            <article class="card-produto">
+                <div class="img-produto"><img src="bombom-popo.jpg" alt="Bombom Popô de Coelho"></div>
+                <h3 class="titulo-produto">Bombom Popô</h3>
+                <div class="preco-produto" style="font-size: 1.6rem;">R$ 6,00</div>
+                <div class="sabores-produto" style="font-size: 0.85rem;"><strong>Sabores:</strong> Ninho, Prestígio, Brigadeiro, Amendoim e Alpino.</div>
+            </article>
+
+            <article class="card-produto">
+                <div class="img-produto"><img src="cone-trufado.jpg" alt="Cone Trufado"></div>
+                <h3 class="titulo-produto">Cone Trufado</h3>
+                <div class="preco-produto" style="font-size: 1.6rem;">R$ 15,00</div>
+                <div class="sabores-produto" style="font-size: 0.85rem;"><strong>Sabores:</strong> Ninho, Prestígio, Brigadeiro, Amendoim e Alpino.</div>
+            </article>
+
+            <article class="card-produto">
+                <div class="img-produto"><img src="caixa-bombons.jpg" alt="Caixa com 4 Bombons"></div>
+                <h3 class="titulo-produto">Caixa 4 Bombons</h3>
+                <div class="preco-produto" style="font-size: 1.6rem;">R$ 15,00</div>
+                <div class="sabores-produto" style="font-size: 0.85rem;"><strong>Sabores:</strong> Ninho, Prestígio, Brigadeiro, Amendoim e Alpino.</div>
+            </article>
+
+            <article class="card-produto">
+                <div class="img-produto"><img src="cartao-pascoa.jpg" alt="Cartão de Páscoa com Bombom"></div>
+                <h3 class="titulo-produto">Cartão c/ Bombom</h3>
+                <div class="preco-produto" style="font-size: 1.6rem;">R$ 6,00</div>
+                <div class="sabores-produto" style="font-size: 0.85rem;"><strong>Sabores:</strong> Ninho, Prestígio, Brigadeiro, Amendoim e Alpino.</div>
+            </article>
+        </section>
+
+        <!-- INFORMAÇÕES IMPORTANTES (DIRETAS E CLARAS) -->
+        <section class="secao-infos animar">
+            <h2 style="font-size: 2rem; margin-bottom: 2rem; text-align: center;">Ficou com dúvida? Veja como funciona:</h2>
+            
+            <div class="grid-infos">
+                <div class="item-info">
+                    <div class="icone-info"><i class="fa-solid fa-money-bill-wave"></i></div>
+                    <h4>Formas de Pagamento</h4>
+                    <p>Aceitamos Dinheiro, Cartão de Crédito/Débito e Pix. Tudo fácil para você!</p>
+                </div>
+                <div class="item-info">
+                    <div class="icone-info"><i class="fa-regular fa-credit-card"></i></div>
+                    <h4>Parcelamento</h4>
+                    <p>Parcelamos em <span class="texto-destacado">até 3x sem juros</span> (Atenção: válido somente para os Ovos de Colher).</p>
+                </div>
+                <div class="item-info">
+                    <div class="icone-info"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <h4>Como confirmar o pedido?</h4>
+                    <p>Sua encomenda só é confirmada após o pagamento de <span class="texto-destacado">50% do valor total</span>.</p>
+                </div>
+                <div class="item-info">
+                    <div class="icone-info"><i class="fa-solid fa-calendar-xmark"></i></div>
+                    <h4>Data Limite</h4>
+                    <p>Não deixe para a última hora! Aceitaremos pedidos somente até o dia <span class="texto-destacado">01/04/2026</span>.</p>
+                </div>
+                <div class="item-info" style="grid-column: 1 / -1; max-width: 400px; margin: 0 auto;">
+                    <div class="icone-info"><i class="fa-solid fa-motorcycle"></i></div>
+                    <h4>Entrega ou Retirada</h4>
+                    <p>Enviamos através de aplicativos de entrega, ou você pode vir retirar com a gente em horário marcado!</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer container animar">
+        <h2 class="chamada-venda">Garanta a sua Páscoa com a gente!</h2>
+        
+        <div class="botoes-contato">
+            <a href="https://wa.me/5543991621883" target="_blank" class="btn-acao btn-whatsapp">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.5rem;"></i> Pedir pelo WhatsApp
+            </a>
+            <a href="https://instagram.com/deliciasdechocolate.oficial" target="_blank" class="btn-acao btn-instagram">
+                <i class="fa-brands fa-instagram" style="font-size: 1.5rem;"></i> Nosso Instagram
+            </a>
+        </div>
+
+    </footer>
+
+    <!-- BOTÃO WHATSAPP FLUTUANTE -->
+    <a href="https://wa.me/5543991621883" target="_blank" class="wpp-flutuante" title="Fale com a gente!">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- INTELIGÊNCIA DA PÁGINA (JS) -->
+    <script>
+        // 1. SAUDAÇÃO INTELIGENTE (Baseada na hora do cliente)
+        const mensagemEl = document.getElementById('mensagem-saudacao');
+        const hora = new Date().getHours();
+        if (hora >= 5 && hora < 12) {
+            mensagemEl.innerHTML = '<i class="fa-regular fa-sun"></i> Bom dia! Escolha suas delícias:';
+        } else if (hora >= 12 && hora < 18) {
+            mensagemEl.innerHTML = '<i class="fa-solid fa-sun"></i> Boa tarde! Que tal um chocolate?';
+        } else {
+            mensagemEl.innerHTML = '<i class="fa-solid fa-moon"></i> Boa noite! Garanta a sua Páscoa:';
+        }
+
+        // 2. CONTADOR REGRESSIVO REAL PARA 01/04/2026
+        const dataFim = new Date("Apr 1, 2026 23:59:59").getTime();
+        
+        const atualizador = setInterval(function() {
+            const agora = new Date().getTime();
+            const distancia = dataFim - agora;
+            
+            if (distancia < 0) {
+                clearInterval(atualizador);
+                document.querySelector('.contador-container').innerHTML = "<h3 style='color: var(--cor-destaque);'>Encomendas Encerradas!</h3>";
+                return;
+            }
+
+            document.getElementById("dia").innerText = Math.floor(distancia / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("hora").innerText = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("min").innerText = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        }, 1000);
+
+        // 3. ANIMAÇÕES DE APARECER (Deixa o site profissional e leve)
+        const elementosAnimar = document.querySelectorAll('.animar');
+        const observador = new IntersectionObserver((entradas) => {
+            entradas.forEach(entrada => {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add('visivel');
+                    observador.unobserve(entrada.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        elementosAnimar.forEach(el => observador.observe(el));
+    </script>
+</body>
+</html>
