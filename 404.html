@@ -195,7 +195,7 @@
 
                 <!-- Sabores -->
                 <div class="mb-5">
-                    <label class="block text-sm font-semibold text-brand-dark mb-2">Escolha o Sabor <span class="text-red-500">*</span></label>
+                    <label id="flavor-label" class="block text-sm font-semibold text-brand-dark mb-2">Escolha o Sabor <span class="text-red-500">*</span></label>
                     <div id="modal-flavors" class="space-y-2">
                         <!-- Radios gerados via JS -->
                     </div>
@@ -226,7 +226,7 @@
             </div>
 
             <div class="p-4 bg-gray-50 border-t border-gray-100 shrink-0">
-                <button onclick="addToCart()" class="w-full bg-brand-dark hover:bg-[#361a0c] text-white py-4 rounded-xl font-bold text-lg shadow-lg transition flex justify-center items-center gap-2">
+                <button id="modal-add-btn" onclick="addToCart()" class="w-full bg-brand-dark hover:bg-[#361a0c] text-white py-4 rounded-xl font-bold text-lg shadow-lg transition flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                     <i class="fa-solid fa-cart-plus"></i> Adicionar ao Pedido
                 </button>
             </div>
@@ -292,7 +292,8 @@
                         img: "ovo-de-degustacao.jpeg",
                         flavors: ["Alpino", "Maracujá", "Morango", "Prestígio", "Amendoim", "Ninho"],
                         allowBrownie: false,
-                        isNovidade: true
+                        isNovidade: true,
+                        requiredFlavors: 6
                     }
                 ]
             },
@@ -311,7 +312,7 @@
                 ]
             },
             {
-                category: "Ovos Premium",
+                category: "Premium",
                 items: [
                     {
                         id: "prem_colher",
@@ -404,6 +405,7 @@
         let cart = [];
         let currentModalProduct = null;
         let modalQuantity = 1;
+        let multiFlavorState = {};
         const BROWNIE_PRICE = 22.00;
 
         // --- UTILITÁRIOS ---
@@ -517,16 +519,28 @@
 
             // Render Flavors
             const flavorsContainer = document.getElementById('modal-flavors');
+            const flavorLabel = document.getElementById('flavor-label');
             flavorsContainer.innerHTML = '';
-            product.flavors.forEach((flavor, index) => {
-                const checked = index === 0 ? 'checked' : '';
-                flavorsContainer.innerHTML += `
-                    <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition has-[:checked]:border-brand-dark has-[:checked]:bg-brand-bg/20">
-                        <input type="radio" name="flavor" value="${flavor}" class="w-4 h-4 text-brand-dark accent-brand-dark" ${checked}>
-                        <span class="font-medium text-brand-dark">${flavor}</span>
-                    </label>
-                `;
-            });
+            
+            if (product.requiredFlavors > 1) {
+                flavorLabel.innerHTML = `Escolha os ${product.requiredFlavors} Recheios <span class="text-red-500">*</span>`;
+                multiFlavorState = {};
+                product.flavors.forEach(f => multiFlavorState[f] = 0);
+                renderMultiFlavorsUI();
+            } else {
+                flavorLabel.innerHTML = `Escolha o Sabor <span class="text-red-500">*</span>`;
+                document.getElementById('modal-add-btn').disabled = false;
+                document.getElementById('modal-add-btn').innerHTML = '<i class="fa-solid fa-cart-plus"></i> Adicionar ao Pedido';
+                product.flavors.forEach((flavor, index) => {
+                    const checked = index === 0 ? 'checked' : '';
+                    flavorsContainer.innerHTML += `
+                        <label class="flex items-center gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50 transition has-[:checked]:border-brand-dark has-[:checked]:bg-brand-bg/20">
+                            <input type="radio" name="flavor" value="${flavor}" class="w-4 h-4 text-brand-dark accent-brand-dark" ${checked}>
+                            <span class="font-medium text-brand-dark">${flavor}</span>
+                        </label>
+                    `;
+                });
+            }
 
             // Brownie Add-on
             const brownieSection = document.getElementById('modal-brownie-section');
@@ -546,6 +560,52 @@
             document.getElementById('product-modal').firstElementChild.classList.add('modal-enter');
             
             updateModalPrice();
+        }
+
+        function renderMultiFlavorsUI() {
+            const container = document.getElementById('modal-flavors');
+            const required = currentModalProduct.requiredFlavors;
+            let total = Object.values(multiFlavorState).reduce((a,b) => a+b, 0);
+
+            let html = `<div class="text-xs text-brand-accent font-bold mb-3 flex justify-between items-center bg-brand-light p-2 rounded">
+                            <span>Selecionados:</span>
+                            <span class="text-sm ${total === required ? 'text-green-600' : 'text-brand-dark'}">${total} / ${required}</span>
+                        </div>`;
+
+            currentModalProduct.flavors.forEach(flavor => {
+                let qty = multiFlavorState[flavor];
+                html += `
+                    <div class="flex items-center justify-between p-3 border ${qty > 0 ? 'border-brand-dark bg-brand-bg/10' : 'border-gray-200'} rounded-lg transition mb-2">
+                        <span class="font-medium text-brand-dark">${flavor}</span>
+                        <div class="flex items-center gap-3 bg-white border border-gray-200 rounded p-1 shadow-sm">
+                            <button type="button" onclick="updateFlavorQty('${flavor}', -1)" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-red-500 rounded disabled:opacity-30 disabled:cursor-not-allowed" ${qty === 0 ? 'disabled' : ''}><i class="fa-solid fa-minus text-[10px]"></i></button>
+                            <span class="text-sm font-bold w-4 text-center text-brand-dark">${qty}</span>
+                            <button type="button" onclick="updateFlavorQty('${flavor}', 1)" class="w-6 h-6 flex items-center justify-center text-gray-500 hover:text-green-500 rounded disabled:opacity-30 disabled:cursor-not-allowed" ${total >= required ? 'disabled' : ''}><i class="fa-solid fa-plus text-[10px]"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+
+            const addBtn = document.getElementById('modal-add-btn');
+            if (total === required) {
+                addBtn.disabled = false;
+                addBtn.innerHTML = '<i class="fa-solid fa-cart-plus"></i> Adicionar ao Pedido';
+            } else {
+                addBtn.disabled = true;
+                addBtn.innerHTML = `<i class="fa-solid fa-lock"></i> Faltam ${required - total} recheios`;
+            }
+        }
+
+        function updateFlavorQty(flavor, delta) {
+            const required = currentModalProduct.requiredFlavors;
+            let total = Object.values(multiFlavorState).reduce((a,b) => a+b, 0);
+
+            if (delta > 0 && total >= required) return;
+            if (delta < 0 && multiFlavorState[flavor] <= 0) return;
+
+            multiFlavorState[flavor] += delta;
+            renderMultiFlavorsUI();
         }
 
         function closeProductModal() {
@@ -573,11 +633,21 @@
         function addToCart() {
             if (!currentModalProduct) return;
 
-            const flavor = document.querySelector('input[name="flavor"]:checked').value;
+            let finalFlavorStr = "";
+            if (currentModalProduct.requiredFlavors > 1) {
+                let selectedArr = [];
+                for (const [flav, qt] of Object.entries(multiFlavorState)) {
+                    if (qt > 0) selectedArr.push(`${qt}x ${flav}`);
+                }
+                finalFlavorStr = selectedArr.join(', ');
+            } else {
+                finalFlavorStr = document.querySelector('input[name="flavor"]:checked').value;
+            }
+
             const wantBrownie = currentModalProduct.allowBrownie && document.getElementById('modal-brownie').checked;
             
             // Generate unique ID for cart item based on selections
-            const cartItemId = `${currentModalProduct.id}_${flavor}_${wantBrownie}`;
+            const cartItemId = `${currentModalProduct.id}_${finalFlavorStr}_${wantBrownie}`;
             
             // Check if already in cart
             const existingItem = cart.find(i => i.cartItemId === cartItemId);
@@ -591,7 +661,7 @@
                     name: currentModalProduct.name,
                     basePrice: currentModalProduct.price,
                     finalPrice: currentModalProduct.price, // Will be recalculated for logic
-                    flavor: flavor,
+                    flavor: finalFlavorStr,
                     hasBrownie: wantBrownie,
                     quantity: modalQuantity,
                     isPopo: currentModalProduct.isPopo || false
@@ -770,7 +840,15 @@
             if (cart.length === 0) return;
 
             const phone = "5543991621883";
-            let message = "*Olá, Delícias de Chocolate!* Gostaria de fazer minha encomenda de Páscoa:\n\n";
+            
+            // Usando código seguro para evitar erro de codificação de emojis ()
+            const eQuad = decodeURIComponent('%E2%96%AA%EF%B8%8F'); // Quadrado
+            const ePres = decodeURIComponent('%F0%9F%8E%81');       // Presente
+            const eChoc = decodeURIComponent('%F0%9F%8D%AB');       // Chocolate
+            const eDinh = decodeURIComponent('%F0%9F%92%B8');       // Dinheiro
+            const eCoel = decodeURIComponent('%F0%9F%90%B0');       // Coelho
+
+            let message = `${eCoel} *Olá, Delícias de Chocolate!* Gostaria de fazer minha encomenda de Páscoa:\n\n`;
             
             let grandTotal = 0;
             let totalDiscount = 0;
@@ -789,8 +867,7 @@
                     hasSpoonEgg = true;
                 }
 
-                // \u{25AA} = quadradinho preto
-                message += `\u{25AA} ${item.quantity}x *${item.name}*\n`;
+                message += `${eQuad} ${item.quantity}x *${item.name}*\n`;
                 message += `   Sabor: ${item.flavor}\n`;
                 if (item.hasBrownie) message += `   Adicional: Casca de Brownie (+${formatMoney(BROWNIE_PRICE)})\n`;
                 
@@ -802,16 +879,13 @@
             });
 
             if (totalDiscount > 0) {
-                // \u{1F381} = emoji de presente
-                message += `\u{1F381} *Você economizou:* ${formatMoney(totalDiscount)}\n`;
+                message += `${ePres} *Você economizou:* ${formatMoney(totalDiscount)}\n`;
             }
-            // \u{1F36B} = emoji de chocolate
-            message += `\u{1F36B} *VALOR TOTAL: ${formatMoney(grandTotal)}*\n`;
-            // \u{1F4B8} = emoji de dinheiro voando
-            message += `\u{1F4B8} *Confirmação da Encomenda (50%): ${formatMoney(grandTotal / 2)}*\n\n`;
+            message += `${eChoc} *VALOR TOTAL: ${formatMoney(grandTotal)}*\n`;
+            message += `${eDinh} *Confirmação da Encomenda (50%): ${formatMoney(grandTotal / 2)}*\n\n`;
 
             if(hasSpoonEgg) {
-                message += `*(Notei que tenho Ovos de Colher no pedido, gostaria de saber sobre o parcelamento em até 3x sem juros no cartão)*\n\n`;
+                message += `*(Tenho Ovos de Colher no pedido, gostaria de saber sobre o parcelamento em até 3x sem juros no cartão)*\n\n`;
             }
 
             message += `Estou ciente do pagamento de 50% para confirmar minha encomenda!`;
