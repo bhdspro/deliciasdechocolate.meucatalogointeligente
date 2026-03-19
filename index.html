@@ -811,10 +811,10 @@
             message += `\u{1F4B8} *Confirmação da Encomenda (50%): ${formatMoney(grandTotal / 2)}*\n\n`;
 
             if(hasSpoonEgg) {
-                message += `*(Notei que tenho Ovos de Colher no pedido, gostaria de saber sobre o parcelamento em até 3x sem juros no cartão)*\n`;
+                message += `*(Notei que tenho Ovos de Colher no pedido, gostaria de saber sobre o parcelamento em até 3x sem juros no cartão)*\n\n`;
             }
 
-            message += `Estou ciente do pagamento de 50% para confirmação. Aguardo o retorno!`;
+            message += `Estou ciente do pagamento de 50% para confirmar minha encomenda!`;
 
             const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
