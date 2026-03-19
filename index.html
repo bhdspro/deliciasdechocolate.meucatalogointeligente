@@ -208,7 +208,7 @@
                             <input type="checkbox" id="modal-brownie" class="w-5 h-5 accent-brand-dark cursor-pointer rounded">
                         </div>
                         <div>
-                            <p class="font-bold text-brand-dark">Trocar por Casca de Brownie</p>
+                            <p class="font-bold text-brand-dark">Trocar Casca por Casca de Brownie</p>
                             <p class="text-sm text-gray-600">+ R$ 22,00</p>
                         </div>
                     </label>
@@ -252,7 +252,7 @@
 
         <div class="p-6 bg-gray-50 border-t border-gray-200 shrink-0 shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
             <div id="discount-warning" class="text-xs text-green-600 font-semibold mb-3 hidden bg-green-100 p-2 rounded text-center">
-                Desconto aplicado nos Bombons Popô!
+                Desconto aplicado nos Bombons Popô de Coelho!
             </div>
             
             <div class="flex justify-between items-center mb-2 text-sm text-green-600 hidden" id="cart-discount-row">
@@ -264,7 +264,7 @@
                 <span id="cart-total" class="text-2xl font-bold text-brand-dark">R$ 0,00</span>
             </div>
             <div class="flex justify-between items-center mb-6 pt-2 border-t border-gray-200">
-                <span class="text-gray-600 font-bold text-sm">Sinal (Min. 50%)</span>
+                <span class="text-gray-600 font-bold text-sm">Confirmação da Encomenda (Min. 50%)</span>
                 <span id="cart-half-total" class="text-xl font-bold text-brand-accent">R$ 0,00</span>
             </div>
             
@@ -380,7 +380,7 @@
                     },
                     {
                         id: "lemb_caixa",
-                        name: "Caixa de Bombons (4 Unidades)",
+                        name: "Caixa de Bombons (4 Un.)",
                         price: 15.00,
                         desc: "Uma delicada caixinha com 4 bombons artesanais, prontinha para emocionar alguém especial.",
                         img: "caixa-de-bombons-com-4-unidades.jpeg",
@@ -654,7 +654,7 @@
                     let itemOriginalUnitTotal = item.basePrice + (item.hasBrownie ? BROWNIE_PRICE : 0);
                     totalDiscount += (itemOriginalUnitTotal * item.quantity) - itemRowTotal;
 
-                    const brownieText = item.hasBrownie ? `<p class="text-xs text-brand-accent mt-1">+ Casca de Brownie (+${formatMoney(BROWNIE_PRICE)})</p>` : '';
+                    const brownieText = item.hasBrownie ? `<p class="text-xs text-brand-accent mt-1">Com Casca de Brownie (+${formatMoney(BROWNIE_PRICE)})</p>` : '';
                     
                     // Mostra se o item teve desconto
                     const isDiscounted = item.isPopo && item.finalPrice < item.basePrice;
@@ -789,22 +789,26 @@
                     hasSpoonEgg = true;
                 }
 
-                message += `▪️ ${item.quantity}x *${item.name}*\n`;
+                // \u{25AA} = quadradinho preto
+                message += `\u{25AA} ${item.quantity}x *${item.name}*\n`;
                 message += `   Sabor: ${item.flavor}\n`;
                 if (item.hasBrownie) message += `   Adicional: Casca de Brownie (+${formatMoney(BROWNIE_PRICE)})\n`;
                 
                 if (item.isPopo && item.finalPrice < item.basePrice) {
-                    message += `   *(Desconto Popô Aplicado: ${formatMoney(item.finalPrice)}/un)*\n`;
+                    message += `   *(Desconto Aplicado: ${formatMoney(item.finalPrice)}/un)*\n`;
                 }
                 
                 message += `   Subtotal: ${formatMoney(rowTotal)}\n\n`;
             });
 
             if (totalDiscount > 0) {
-                message += `🎁 *Você economizou:* ${formatMoney(totalDiscount)}\n`;
+                // \u{1F381} = emoji de presente
+                message += `\u{1F381} *Você economizou:* ${formatMoney(totalDiscount)}\n`;
             }
-            message += `🍫 *VALOR TOTAL: ${formatMoney(grandTotal)}*\n`;
-            message += `💸 *Sinal de Confirmação (50%): ${formatMoney(grandTotal / 2)}*\n\n`;
+            // \u{1F36B} = emoji de chocolate
+            message += `\u{1F36B} *VALOR TOTAL: ${formatMoney(grandTotal)}*\n`;
+            // \u{1F4B8} = emoji de dinheiro voando
+            message += `\u{1F4B8} *Confirmação da Encomenda (50%): ${formatMoney(grandTotal / 2)}*\n\n`;
 
             if(hasSpoonEgg) {
                 message += `*(Notei que tenho Ovos de Colher no pedido, gostaria de saber sobre o parcelamento em até 3x sem juros no cartão)*\n`;
@@ -847,7 +851,7 @@
 
         // --- INICIALIZAÇÃO E PROVA SOCIAL ---
         function initSocialProof() {
-            const names = ["Amanda", "Beatriz", "Camila", "Fernanda", "Juliana", "Mariana", "Ana Clara", "Isabela", "Letícia", "Bruna", "Carlos", "Rafael", "Lucas", "João", "Marcos", "Patrícia", "Bianca"];
+            const names = ["Amanda", "Beatriz", "Camila", "Fernanda", "Juliana", "Mariana", "Ana Clara", "Isabela", "Letícia", "Bruna", "Carlos", "Rafael", "Lucas", "João", "Marcos", "Patrícia", "Bianca", "Gabriel", "Matheus", "Thiago", "Pedro", "Arthur", "Miguel", "Heitor", "Alice", "Sophia", "Laura", "Valentina", "Helena", "Vitória", "Aline", "Jéssica", "Nathalia", "Rodrigo", "Felipe", "Diego", "Larissa", "Renata", "Carolina", "Eduardo", "Leonardo", "Tatiana", "Simone", "Daniel"];
             
             function showToast() {
                 const toast = document.getElementById('social-proof-toast');
@@ -869,20 +873,20 @@
                     toast.classList.remove('translate-y-20', 'opacity-0');
                 }, 50);
                 
-                // Esconde depois de 4.5 segundos
+                // Esconde depois de 6.5 segundos (aumentado para dar tempo de ler)
                 setTimeout(() => {
                     toast.classList.add('translate-y-20', 'opacity-0');
                     setTimeout(() => toast.classList.add('hidden'), 500); 
-                }, 4500);
+                }, 6500);
             }
 
-            // Inicia o gatilho: Começa em 4s e depois a cada 15 a 30s repete.
+            // Inicia o gatilho: Começa em 12s e depois a cada 40 a 90s repete.
             setTimeout(() => {
                 showToast();
                 setInterval(() => {
                     showToast();
-                }, 15000 + Math.random() * 15000);
-            }, 4000);
+                }, 40000 + Math.random() * 50000);
+            }, 12000);
         }
 
         window.onload = () => {
